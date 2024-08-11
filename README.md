@@ -12,7 +12,6 @@ The goal of this site it to be a place where streamers, influencers and others c
   - Every page will have a navbar
 
 - NAVBAR:
-
   - Site name
   - User settings
 
@@ -31,21 +30,27 @@ The goal of this site it to be a place where streamers, influencers and others c
   - Big account image
   - Buttons to navigate to the user's media options
 
-Backend:
+- Social page: 
+  - Big social account info
+  - Username
+  - Followers/subscribers count
+  - Assets (shows all the assets of a user and can filter)
+
+**Backend**:
 
 - Users:
   - Description
     This will represent our different users in our system
 
   - Data
-    - Id <number> (automatically generated)
-    - Usename <string>
-    - Password <string>
-    - Email <string>
-    - Phone number (optional) <number>
-    - Profile picture <string> (for now, manually hardcodedly save into our program)
-    - List of socials <Socials[]>
-    - Admin <boolean> (can only be set in the db directly)
+    - id <number> (automatically generated)
+    - usename <string>
+    - password <string>
+    - email <string>
+    - phoneNumber (optional) <string>
+    - profilePicture <string> (for now, manually hardcodedly save into our program)
+    - socials <Socials[]>
+    - admin <boolean> (can only be set in the db directly)
 
   - REST calls
     - Add user
@@ -56,17 +61,33 @@ Backend:
     - Delete user
 
 - Socials:
-
   - Description
     This will represent our different social media options that each user has
 
   - Data
-    - Id <number> (automatically generated)
-    - Type <string>
-    - Username <string>
-    - User id <number> (will be connected to the user that has this social media)
+    - id <number> (automatically generated)
+    - type <string>
+    - username <string>
+    - userId <number> (will be connected to the user that has this social media)
+    - assets <number[]> (list of assets id)
 
   - REST calls
     - Add new type to a user
+    - Add new asset to social
     - Get all users with type
+    - Get all social assets
     - Delete type from a user
+
+- Assets:
+  - Description
+    This will represent the assets that each social uses (that the user wants to show) such as emotes, overlays, models, etc.
+
+  - Data 
+    - id <number> (automatically generated)
+    - type <string> (layout, emote, model, etc.)
+    - image <string>
+    - socialId <number> (connected to the social it's connected to)
+
+  - REST calls
+    - Add new asset
+    - Remove asset
