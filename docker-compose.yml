@@ -1,0 +1,49 @@
+services:
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: infoencer-frontend-container
+    networks:
+      - store-net
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: infoencer-backend-container
+    networks:
+      - infoencer-net
+    depends_on:
+      - mongo
+  
+  mongo:
+    image: mongo:latest
+    container_name: mymongo
+    volumes:
+      - "./data:/data/db"
+    ports:
+      - "27017:27017"
+    networks:
+      - infoencer-net
+  
+  nginx:
+    image: nginx:latest
+    build:
+      context: ./nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    volumes:
+      - "./nginx:/etc/nginx/conf.d"
+    ports:
+      - "613:613"
+    networks:
+      - infoencer-net
+    depends_on:
+      - frontend
+      - backend
+      - mongo
+  
+networks:
+  infoencer-net:
+    driver: bridge
